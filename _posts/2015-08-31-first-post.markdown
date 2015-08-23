@@ -1,7 +1,7 @@
 ---
-title:  "Yada yada"
+title:  "Thoughts and trivia on user guides"
 date:   2015-08-21 10:18:00
-description: ay up
+description: Trying out Sphinx with some funny ass document that I made for a job interview
 ---
 First post, hehe.
 
@@ -10,12 +10,13 @@ To add new posts, simply add a file in the `_posts` directory that follows the c
 
 Jekyll also offers powerful support for code snippets:
 
-{% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
+{% highlight http %}
+HTTP/1.1 200 OK
+Server: nginx
+Date: Thu, 20 Aug 2015 16:55:48 GMT Content-Type: text/html; charset=UTF-8
+Transfer-Encoding: chunked
+Connection: keep-alive Content-Encoding: gzip
+!DOCTYPE html><html><head><title>JetBrains</title>
 {% endhighlight %}
 
 Check out the [Jekyll docs][jekyll] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll's GitHub repo][jekyll-gh].
