@@ -18,7 +18,7 @@ HTTP (Hypertext Transfer Protocol) — это протокол передачи 
 
 Стандартный HTTP-запрос (request) для отображения веб-страницы в браузере выглядит так:
 
-```
+{% highlight http %}
 GET /company/jobs/ HTTP/1.1
 Host: www.jetbrains.com
 Connection: keep-alive
@@ -26,7 +26,7 @@ Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0
 User-Agent: Mozilla/5.0 (GERTY) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.65 Safari/537.36
 Accept-Encoding: gzip, deflate, sdch
 Accept-Language: en-US,en;q=0.8,ru;q=0.6
-```
+{% endhighlight %}
 
 Первая строка запроса называется **стартовой** (request line). Стартовая строка запроса из примера содержит **метод** — `GET`, URI запрашиваемого ресурса — `/job/vacancies/dev_doc.xml` и уточняет стандарт протокола — `HTTP/1.1`.
 
@@ -36,17 +36,17 @@ Accept-Language: en-US,en;q=0.8,ru;q=0.6
 
 Дополнительно запрос может включать **тело сообщения** (message body) через одну пустую строку после заголовков. Тело служит описанием объекта, который передается в запросе, и используется в нескольких методах, например `POST`:
 
-```HTTP
+{% highlight http %}
 POST person.php HTTP/1.1
 Host: vitalilobanov.hehe
 Content-Length: 39
 
 act=handwave&face=smile&message=heyguys
-```
+{% endhighlight %}
 
 Формат ответного сообщения совпадает с форматом запроса, однако его содержимое отличается. Стандартный HTTP-ответ (response) с веб-страницей выглядит так:
 
-```HTTP
+{% highlight http %}
 HTTP/1.1 200 OK
 Server: nginx
 Date: Thu, 20 Aug 2015 16:55:48 GMT
@@ -56,7 +56,7 @@ Connection: keep-alive
 Content-Encoding: gzip
 
 !DOCTYPE html><html><head><title>JetBrains :: Currently Open Job Positions...
-```
+{% endhighlight %}
 
 Стартовая строка ответа содержит версию протокола `HTTP/1.1`, код состояния `200` и пояснение к коду `OK`. Код состояния напрямую указывает на результат запроса. Например, коды типа `2xx` указывают на успешную обработку запроса, коды `3xx` сообщают о необходимости перенаправления запроса, коды `4xx` говорят об ошибке на стороне клиента, а коды `5xx` — об ошибке на стороне сервера.
 

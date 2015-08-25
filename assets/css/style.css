@@ -55,8 +55,7 @@ margin-bottom: 20px;
 html, body { height: 100%; }
 
 body {
-	font:18px/1 "Lato", Helvetica, Arial, sans-serif;
-	color: #666;
+	font:300 20px/1 "Lato", Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
 }
@@ -238,7 +237,7 @@ em, i { font-style: italic; }
 
 .post h2 {
 	margin-bottom: 40px;
-	  font: 300 24px/1.5 "Helvetica Neue",Helvetica,Arial,sans-serif;
+	  font: 300 28px/1.5 "Helvetica Neue",Helvetica,Arial,sans-serif;
 	  color: #111;
 }
 
@@ -264,8 +263,8 @@ em, i { font-style: italic; }
 
 h3, h4, h5 { color:#333; }
 
-h3 { font-size:20px; font-weight: 400; }
-h4 { font-size:16px; font-weight:bold; }
+h3 { font-size:24px; font-weight: 400; }
+h4 { font-size:20px; font-weight:bold; }
 h5 { font-size:15px; font-weight: bold; }
 
 h6 {
@@ -312,7 +311,14 @@ pre	{
 	  line-height: 1.5em;
 	  font-weight: 500;
 	color: #d0d4d7;
+}
 
+code {
+  padding: 0px 1px 0px 1px;	
+  font-size: 100%;
+  color: #666;
+  background-color: #f2f9f4;
+  border-radius: 4px;
 }
 
 table {
