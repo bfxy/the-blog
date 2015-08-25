@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Vitali Lobanov - Протокол HTTP: самое основное</title>
+  <link rel="shortcut icon" href="/the-blog/assets/images/favicon.ico">
+  <link rel="stylesheet" href="/the-blog/assets/css/style.css">
+  <link rel="alternate" type="application/rss+xml" title="My Blog" href="/rss.xml">
+  <link rel="stylesheet" href="/the-blog/assets/css/highlight.css">
+</head>
+<body>
+
+  <nav class="main-nav">
+    
+        <a href='/the-blog/'> <span class="arrow">←</span> Home </a>
+    
+
+    
+        
+            <a href='/the-blog/about/'>About </a>
+        
+    
+    <a class="cta" href="/the-blogfeed.xml">Subscribe</a>
+</nav>
+
+  
+
+  <section id="wrapper" class="">
+    <article class="post">
+    <header>
+        <h1>Протокол HTTP: самое основное</h1>
+        <h2 class="headline">August 23, 2015</h2>
+    </header>
+    <section id="post-body">
+        <h2>Дано</h2>
+
+<h2>Что такое HTTP</h2>
+
+<p>HTTP (Hypertext Transfer Protocol) — это протокол передачи данных по технологии «клиент–сервер». HTTP устанавливает связь между клиентом и сервером в виде <strong>запросов</strong> и <strong>ответов</strong>. Клиент инициирует соединение и посылает запрос на совершение действия. Сервер получает этот запрос, выполняет действие и возвращает клиенту ответ с результатом.</p>
+
+<p>Частый пример использования HTTP — это связь между веб-браузером и веб-сайтом. Браузер выступает в роли клиента и отправляет запросы серверу, который обслуживает веб-сайт. Сервер принимает запрос и отдаёт клиенту HTML-страницу и сопутствующие данные. </p>
+
+<p>Основной объект манипуляции в HTTP — это <strong>ресурс</strong>. Ресурсом может быть HTML-файл или любой другой файл, а также динамически-генерируемый результат действия, например числовое значение или координаты. Ресурсы идентифицируются по <strong>URI</strong> (Universal Resource Identifier) — набору текстовых параметров в сообщении запроса. Передача сообщения по протоколу называется <strong>транзакцией</strong>. Последовательность таких транзакций называется <strong>сессией</strong>.</p>
+
+<h3>Пример HTTP-сессии</h3>
+
+<p>Стандартный HTTP-запрос (request) для отображения веб-страницы в браузере выглядит так:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">GET /company/jobs/ HTTP/1.1
+Host: www.jetbrains.com
+Connection: keep-alive
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+User-Agent: Mozilla/5.0 (GERTY) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.65 Safari/537.36
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US,en;q=0.8,ru;q=0.6
+</code></pre></div>
+<p>Первая строка запроса называется <strong>стартовой</strong> (request line). Стартовая строка запроса из примера содержит <strong>метод</strong> — <code>GET</code>, URI запрашиваемого ресурса — <code>/job/vacancies/dev_doc.xml</code> и уточняет стандарт протокола — <code>HTTP/1.1</code>.</p>
+
+<p>Метод — это основная часть запроса, которая указывает серверу на характер требуемого действия. Так, метод <code>GET</code> запрашивает содержимое ресурса (например, HTML-файл) по определённому URI. Метод <code>HEAD</code> запрашивает метаинформацию о сервере и ресурсе. Метод <code>POST</code> передаёт заданному ресурсу данные, например комментарии, которые пользователь оставляет на сайте. Стандарт HTTP/1.1 включает 8 методов, однако не каждый сервер обрабатывает все методы по соображениям безопасности. Метод <code>OPTIONS</code> в таком случае позволяет узнать методы, которые поддерживает конкретный сервер.</p>
+
+<p>После стартовой строки следуют <strong>заголовки</strong> (headers), которые характеризуют <strong>параметры</strong> транзакции. Так, параметр <code>Accept:</code> содержит несколько значений, которые обозначают допустимые форматы для запрашиваемого ресурса, то есть <code>text/html</code>, <code>application/xhtml+xml</code> и т.д. Заголовки запроса указывают адрес сервера в сети, а также сообщают сведения о клиенте и другие данные для обеспечения совместимости.</p>
+
+<p>Дополнительно запрос может включать <strong>тело сообщения</strong> (message body) через одну пустую строку после заголовков. Тело служит описанием объекта, который передается в запросе, и используется в нескольких методах, например <code>POST</code>:</p>
+<div class="highlight"><pre><code class="language-HTTP" data-lang="HTTP"><span class="nf">POST</span> <span class="nn">person.php</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">vitalilobanov.hehe</span>
+<span class="na">Content-Length</span><span class="o">:</span> <span class="l">39</span>
+
+act=handwave&amp;face=smile&amp;message=heyguys
+</code></pre></div>
+<p>Формат ответного сообщения совпадает с форматом запроса, однако его содержимое отличается. Стандартный HTTP-ответ (response) с веб-страницей выглядит так:</p>
+<div class="highlight"><pre><code class="language-HTTP" data-lang="HTTP"><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Server</span><span class="o">:</span> <span class="l">nginx</span>
+<span class="na">Date</span><span class="o">:</span> <span class="l">Thu, 20 Aug 2015 16:55:48 GMT</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">text/html; charset=UTF-8</span>
+<span class="na">Transfer-Encoding</span><span class="o">:</span> <span class="l">chunked</span>
+<span class="na">Connection</span><span class="o">:</span> <span class="l">keep-alive</span>
+<span class="na">Content-Encoding</span><span class="o">:</span> <span class="l">gzip</span>
+
+!DOCTYPE html&gt;<span class="nt">&lt;html&gt;&lt;head&gt;&lt;title&gt;</span>JetBrains :: Currently Open Job Positions...
+</code></pre></div>
+<p>Стартовая строка ответа содержит версию протокола <code>HTTP/1.1</code>, код состояния <code>200</code> и пояснение к коду <code>OK</code>. Код состояния напрямую указывает на результат запроса. Например, коды типа <code>2xx</code> указывают на успешную обработку запроса, коды <code>3xx</code> сообщают о необходимости перенаправления запроса, коды <code>4xx</code> говорят об ошибке на стороне клиента, а коды <code>5xx</code> — об ошибке на стороне сервера.</p>
+
+<p>Заголовки ответа также содержат параметры транзакции. Например, параметр <code>Content-Type:</code> указывает на формат передаваемого клиенту ресурса, то есть <code>text/html</code>. Заголовки ответа включают сведения о сервере, дате транзакции, механизмах кеширования, кодировках и другие параметры.   </p>
+
+<p>Тело сообщения ответа содержит описание запрошенного ресурса. В случае примера выше, ресурс — это HTML-страница, которую клиент получает и показывает пользователю: <code>&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;title&gt;...</code></p>
+
+<h3>HTTP и другие протоколы</h3>
+
+<p>HTTP — это протокол <strong>прикладного</strong> уровня из семейства протоколов TCP/IP. HTTP и протоколы других уровней, например TCP, одновременно участвуют в сетевом взаимодействии. TCP — это протокол <strong>транспортного</strong> уровня, который обеспечивает передачу потоков данных между клиентом и сервером. TCP-соединение создается между клиентом и сервером при каждом HTTP-запросе.</p>
+
+<p>В отличие от TCP и многих протоколов, HTTP — это <strong>stateless</strong>-протокол, то есть протокол, который не сохраняет состояние соединения. Это означает, что HTTP-соединение прерывается после каждой транзакции без сохранения сведений об этой транзакции. Однако различные клиентские и серверные приложения могут запоминать сведения о транзакциях и сессиях. Это полезно, например, когда нужно сохранять авторизацию пользователя на веб-сайте без необходимости выполнять аутентификацию в каждом запросе.</p>
+
+<h5>Дополнительные источники</h5>
+
+<ol>
+<li><a href="http://docstore.mik.ua/orelly/webprog/webnut/ch17_01.htm">HTTP — Webmaster in a Nutshell</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol">Hypertext Transfer Protocol — Wikipedia (en)</a></li>
+<li><a href="http://www.w3.org/Protocols/rfc2616/rfc2616.html">http://www.w3.org/Protocols/rfc2616/rfc2616.html</a></li>
+<li><a href="http://www.jmarshall.com/easy/http/">HTTP Made Really Easy — James Marshall</a></li>
+</ol>
+
+    </section>
+</article>
+<footer id="post-meta" class="clearfix">
+    <a href="http://twitter.com/powertoya">
+        <img class="avatar" src="/the-blog/assets/images/avatar.jpg">
+        <div>
+            <span class="dark">Vitali Lobanov</span>
+            <span>  Man I tell you hwat…</span>
+        </div>
+    </a>
+
+    <section id="sharing">
+        <a class="twitter" href="https://twitter.com/intent/tweet?text=http://lobanov.tech/2015/HTTP-wiki/ - Протокол HTTP: самое основное by @powertoya"><span class="icon-twitter"> Tweet</span></a>
+
+<a class="facebook" href="#" onclick="
+    window.open(
+      'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),
+      'facebook-share-dialog',
+      'width=626,height=436');
+    return false;"><span class="icon-facebook-rect"> Share</span>
+</a>
+    </section>
+</footer>
+
+<!-- Disqus comments -->
+
+
+<!-- Archive post list -->
+
+    <ul id="post-list" class="archive readmore">
+        <h3>Read more</h3>
+        
+            <li>
+                <a href="/the-blog/2015/HTTP-wiki/">Протокол HTTP: самое основное<aside class="dates">Aug 23</aside></a>
+            </li>
+        
+            <li>
+                <a href="/the-blog/2015/first-post/">Thoughts and trivia on user guides<aside class="dates">Aug 21</aside></a>
+            </li>
+        
+    </ul>
+
+
+
+
+
+  </section>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="/the-blog/assets/js/main.js"></script>
+  <script src="/the-blog/assets/js/highlight.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-XXXXXXXX-X', 'auto');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>
+
+
+

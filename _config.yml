@@ -1,11 +1,11 @@
 name: Vitali Lobanov
-description: Man I tell you hwat...
+description: "  Man I tell you hwat…"
 meta_description: "So very Hitler"
 
 aboutPage: true
 
 markdown: redcarpet
-highlighter: rogue
+highlighter: pygments
 
 paginate: 20
 baseurl: /the-blog
